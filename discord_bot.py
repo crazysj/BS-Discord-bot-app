@@ -15,6 +15,7 @@ import asyncio
 import aiohttp
 import json
 import shelve
+import urllib.parse
 from discord import Game
 from discord.ext.commands import Bot
 from googlesearch import search
@@ -45,10 +46,11 @@ async def google(context):
         await client.say('Search query can\'t be empty.')
         return
     user_query = user_query[:150] #allowing max length to 150
+    print(user_query)
     try:
         
         for j in search(user_query, tld="co.in", num=5, start=0, stop=5, pause=2):
-            user_result = user_result + "\n" + j
+            user_result = user_result + "\n" + urllib.parse.unquote(j)
             result_count += 1
             #print(j)
         print((context.message.author.id)) #Author id is unique
